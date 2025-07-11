@@ -1,2 +1,2 @@
 # test-klinic
-Code test from job offer
+run `docker-compose up --build` to run the project
