@@ -1,0 +1,27 @@
+version: '3.9'
+
+services:
+
+  frontend:
+    build: ./front/klicic-app
+    container_name: react-frontend
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./front/klicic-app:/app
+      - ./front/klicic-app/node_modules:/app/node_modules # prevent host/node_modules conflicts
+    depends_on:
+      - backend
+    environment:
+      - WATCHPACK_POLLING=true # allows hot reload for development
+    stdin_open: true
+    tty: true
+
+  backend:
+    build: ./back
+    container_name: fastapi-backend
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./back:/app
+    command: uvicorn main:app --host 0.0.0.0 --port 8000 --reload
